@@ -1,3 +1,9 @@
+@import "@fontsource/cinzel";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: "Cinzel", serif;
+}

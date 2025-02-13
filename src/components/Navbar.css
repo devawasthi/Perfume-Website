@@ -1,0 +1,143 @@
+/* Import a luxurious serif font */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
+/* Apply the font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Cinzel", serif;
+  font-weight: 400; /* Reduce the boldness */
+}
+
+
+/* Top Sliding Banner */
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(138, 249, 199);
+  font-size: 16px;
+  font-weight: bold;
+  padding: 18px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.banner div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideText 4s infinite ease-in-out;
+}
+
+@keyframes slideText {
+  0% { transform: translateX(100%); opacity: 0; }
+  10% { transform: translateX(0); opacity: 1; }
+  90% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(-100%); opacity: 0; }
+}
+
+
+/* Navbar Container */
+.navbar-container {
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+}
+
+/* Header Section */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5%;
+  font-size: 18px;
+  font-weight: bold;
+  position: relative;
+}
+
+/* Brand Logo */
+.logo {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #0b884b; /* Deep, rich color */
+}
+
+/* Search Bar */
+.search-bar {
+  width: 40%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+  font-family: 'Playfair Display', serif;
+}
+.search-bar:focus {
+  border-color: #0b884b;
+  box-shadow: 0 0 8px rgba(11, 136, 75, 0.3);
+}
+
+/* User Options */
+.user-options {
+  display: flex;
+  gap: 20px;
+}
+
+.user-options a {
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* Light Gradient Separator */
+.separator {
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(to right, #f5f5f5, #ddd, #f5f5f5);
+  margin: 5px 0;
+}
+
+/* Main Navigation */
+.main-nav a {
+  position: relative;
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: #0b884b;
+  left: 50%;
+  bottom: -3px;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.main-nav a:hover {
+  color: #0b884b;
+}
+
+.main-nav a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+
+.main-nav a {
+  text-decoration: none;
+  color: black;
+  transition: 0.3s ease;
+}
+
+.main-nav a:hover {
+  color: #555;
+}
+
