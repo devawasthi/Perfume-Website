@@ -5,27 +5,53 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 
 const Navbar = () => {
   return (
-    <nav className="bg-gradient-to-b from-purple-900 to-cyan-400 p-6 shadow-md">
+    <nav className="bg-gradient-to-b from-charcoal-900 to-plum-800 p-6 shadow-lg">
       <div className="container mx-auto flex flex-col items-center">
-
         {/* Logo & Title */}
         <div className="flex flex-col items-center">
           <img src={perfumeLogo} alt="Allure Perfumery Logo" className="h-16 mb-2" />
-          <h1 className="text-white text-3xl font-bold font-[Playfair Display] tracking-wide">
+          <h1 className="text-gold-500 text-3xl font-bold font-[Inter] tracking-wide">
             ALLURE PERFUMERY
           </h1>
-          <p className="text-white text-sm uppercase tracking-wider">
+          <p className="text-ivory-200 text-sm uppercase tracking-wider">
             Every Scent Tells a Story
           </p>
         </div>
+
         {/* Navigation Links */}
         <ul className="flex space-x-6 mt-4">
-          <li><Link to="/" className="text-white uppercase tracking-widest hover:underline">Home</Link></li>
-          <li><Link to="/about" className="text-white uppercase tracking-widest hover:underline">About</Link></li>
-          <li><Link to="/contact" className="text-white uppercase tracking-widest hover:underline">Contact</Link></li>
-          <Link to="/cart" className="text-white uppercase tracking-widest hover:underline flex items-center">
-              <AiOutlineShoppingCart className="text-2xl mr-1" /> CART
+          <li>
+            <Link 
+              to="/" 
+              className="text-ivory-200 uppercase tracking-widest hover:text-gold-500 transition-colors"
+            >
+              Home
             </Link>
+          </li>
+          <li>
+            <Link 
+              to="/about" 
+              className="text-ivory-200 uppercase tracking-widest hover:text-gold-500 transition-colors"
+            >
+              About
+            </Link>
+          </li>
+          <li>
+            <Link 
+              to="/contact" 
+              className="text-ivory-200 uppercase tracking-widest hover:text-gold-500 transition-colors"
+            >
+              Contact
+            </Link>
+          </li>
+          <li>
+            <Link 
+              to="/cart" 
+              className="text-ivory-200 uppercase tracking-widest hover:text-gold-500 transition-colors flex items-center"
+            >
+              <AiOutlineShoppingCart className="text-2xl mr-1" /> Cart
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>
