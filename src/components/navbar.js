@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiUser, FiShoppingBag, FiHeart, FiSearch } from "react-icons/fi"; 
 import { FiCheckCircle, FiTruck } from "react-icons/fi";
+import { FiChevronDown } from "react-icons/fi";
 import "./Navbar.css";
-
-const navLinks = ["Fragrances", "Gifts", "Bath & Body", "Accessories", "Home"];
 
 const bannerMessages = [
   { text: "Authentic Luxury Fragrances", icon: <FiCheckCircle /> },
@@ -17,7 +16,7 @@ const Navbar = () => {
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [wishlist, setWishlist] = useState([]);
   const cartItems = []; // Replace with actual data when integrating backend
-
+  const [isFocused, setIsFocused] = useState(false);
   const [currentMessage, setCurrentMessage] = useState(0);
   
   useEffect(() => {
@@ -27,10 +26,8 @@ const Navbar = () => {
 
     return () => clearInterval(interval);
   }, []);
-
-  
   return (
-<div className="relative font-[Cinzel]">
+<div className="relative font-[Playfair Display]">
       {/* Sliding Banner */}
 <div className="relative w-full bg-gray-900 text-white py-3 flex items-center justify-center overflow-hidden">
     <AnimatePresence mode="wait">
@@ -73,15 +70,87 @@ const Navbar = () => {
           Galleria Des Parfum
         </motion.h1>
 
-        {/* Search Bar */}
-        <div className="relative w-1/3">
+
+          {/* Navigation Menu */}
+          <motion.div
+              className="flex justify-center items-center gap-8 py-3 bg-gray-30 w-[50%] max-w-1xl  my-1 -ml-9"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+        {/* Brands */}
+        <motion.div
+          className="text-lg font-semibold text-gray-800 cursor-pointer hover:text-black transition transform hover:scale-105"
+          whileHover={{ scale: 1.1 }}
+        >
+          Brands
+        </motion.div>
+
+        {/* Fragrances (Dropdown) */}
+<motion.div className="relative group">
+  <motion.div
+    className="flex items-center text-lg font-semibold text-gray-800 cursor-pointer hover:text-black transition transform hover:scale-105"
+    whileHover={{ scale: 1.1 }}
+  >
+    Fragrances <FiChevronDown className="ml-2" />
+  </motion.div>
+
+  {/* Dropdown Menu (Now Truly Hidden) */}
+  <motion.div
+    className="absolute left-0 mt-2 w-56 bg-white shadow-lg rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:scale-100 transition-all duration-300 z-50"
+  >
+    <ul className="py-2 text-gray-700">
+      <motion.li
+        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+        whileHover={{ scale: 1.05 }}
+      >
+        Men's Fragrances
+      </motion.li>
+      <motion.li
+        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+        whileHover={{ scale: 1.05 }}
+      >
+        Women's Fragrances
+      </motion.li>
+      <motion.li
+        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+        whileHover={{ scale: 1.05 }}
+      >
+        Unisex Fragrances
+      </motion.li>
+    </ul>
+  </motion.div>
+</motion.div>
+
+
+        {/* Bath & Body */}
+        <motion.div
+          className="text-lg font-semibold text-gray-800 cursor-pointer hover:text-black transition transform hover:scale-105"
+          whileHover={{ scale: 1.1 }}
+        >
+          Bath & Body
+        </motion.div>
+      </motion.div>
+      
+{/* Search Bar */}
+<motion.div className="relative w-1/4">
           <input
             type="text"
-            placeholder="Search for a product..."
-            className="w-full border border-gray-400 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:border-black"
+            placeholder="Search our Store..."
+            className="w-half border border-gray-400 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:border-gray-600 focus:shadow-md text-gray-800 normal-case transition-all duration-200"
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
           />
-          <FiSearch className="absolute left-3 top-3 text-gray-600" size={18} />
-        </div>
+
+          {/* Clickable Search Icon */}
+          <div
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-600 cursor-pointer"
+            onClick={() => document.querySelector("input").focus()}
+          >
+            <FiSearch size={18} />
+          </div>
+          </motion.div>
+
 
         {/* Icons Section */}
         <div className="flex items-center space-x-6">
@@ -177,10 +246,12 @@ const Navbar = () => {
               )}
             </AnimatePresence>
           </motion.div>
+          
         </div>
       </nav>
     </div>
   );
 };
+
 
 export default Navbar;
