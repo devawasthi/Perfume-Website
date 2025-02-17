@@ -1,0 +1,17 @@
+/* Hero Image Fullscreen */
+.swiper-slide div {
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  /* Navbar Smooth Transition */
+  .fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+  }
+  

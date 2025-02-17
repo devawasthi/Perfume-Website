@@ -16,8 +16,8 @@ const Navbar = () => {
   const [wishlistOpen, setWishlistOpen] = useState(false);
   const [wishlist, setWishlist] = useState([]);
   const cartItems = []; // Replace with actual data when integrating backend
-  const [isFocused, setIsFocused] = useState(false);
   const [currentMessage, setCurrentMessage] = useState(0);
+  const [scrolling, setScrolling] = useState(false);
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,6 +25,18 @@ const Navbar = () => {
     }, 4000); // 3s visible + 1s transition
 
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolling(true);
+      } else {
+        setScrolling(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   return (
 <div className="relative font-[Playfair Display]">
@@ -80,53 +92,100 @@ const Navbar = () => {
           >
         {/* Brands */}
         <motion.div
-          className="text-lg font-semibold text-gray-800 cursor-pointer hover:text-black transition transform hover:scale-105"
-          whileHover={{ scale: 1.1 }}
+          className="flex items-center text-lg font-semibold text-gray-800 cursor-pointer hover:text-black transition transform relative 
+          before:absolute before:bottom-[-2px] before:left-0 before:w-0 before:h-[2px] 
+          before:bg-black before:transition-all before:duration-300 
+          hover:before:w-full"
         >
           Brands
         </motion.div>
 
-        {/* Fragrances (Dropdown) */}
+       {/* Fragrances (Dropdown) */}
 <motion.div className="relative group">
   <motion.div
-    className="flex items-center text-lg font-semibold text-gray-800 cursor-pointer hover:text-black transition transform hover:scale-105"
-    whileHover={{ scale: 1.1 }}
+    className="flex items-center text-lg font-semibold text-gray-800 cursor-pointer hover:text-black transition transform relative 
+      before:absolute before:bottom-[-2px] before:left-0 before:w-0 before:h-[2px] 
+      before:bg-black before:transition-all before:duration-300 
+      hover:before:w-full"
   >
     Fragrances <FiChevronDown className="ml-2" />
   </motion.div>
 
-  {/* Dropdown Menu (Now Truly Hidden) */}
+  {/* Larger Dropdown Menu */}
   <motion.div
-    className="absolute left-0 mt-2 w-56 bg-white shadow-lg rounded-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:scale-100 transition-all duration-300 z-50"
+    className="absolute left-0 mt-2 w-[500px] bg-white shadow-lg rounded-lg border border-gray-200 opacity-0 invisible 
+      group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 p-6"
+    initial={{ opacity: 0, y: -10 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -10 }}
+    transition={{ duration: 0.3, ease: "easeInOut" }}
   >
-    <ul className="py-2 text-gray-700">
-      <motion.li
-        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-        whileHover={{ scale: 1.05 }}
-      >
-        Men's Fragrances
-      </motion.li>
-      <motion.li
-        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-        whileHover={{ scale: 1.05 }}
-      >
-        Women's Fragrances
-      </motion.li>
-      <motion.li
-        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-        whileHover={{ scale: 1.05 }}
-      >
-        Unisex Fragrances
-      </motion.li>
-    </ul>
+    <div className="grid grid-cols-3 gap-6">
+      {/* Product Type */}
+      <div>
+        <h3 className="text-lg font-bold text-black mb-2">Product Type</h3>
+        <ul className="space-y-1 text-gray-700">
+          {["Samples", "Miniatures", "Decants", "Testers", "Retail Packs", "Vintage/Rare", "Partials"].map((item, index) => (
+            <motion.li
+              key={index}
+              className="cursor-pointer relative 
+                before:absolute before:bottom-0 before:w-0 before:h-[2px] 
+                before:bg-black before:transition-all before:duration-300 
+                hover:before:w-full hover:text-black"
+            >
+              {item}
+            </motion.li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Olfactive Families */}
+      <div>
+        <h3 className="text-lg font-bold text-black mb-2">Olfactive Families</h3>
+        <ul className="space-y-1 text-gray-700">
+          {["Aromatic", "Chypre", "Citrus", "Floral", "Fougere", "Fruity", "Leather", "Oriental", "Woody"].map((item, index) => (
+            <motion.li
+              key={index}
+              className="cursor-pointer relative 
+                before:absolute before:bottom-0 before:w-0 before:h-[2px] 
+                before:bg-black before:transition-all before:duration-300 
+                hover:before:w-2/3 hover:text-black"
+            >
+              {item}
+            </motion.li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Concentration */}
+      <div>
+        <h3 className="text-lg font-bold text-black mb-2">Concentration</h3>
+        <ul className="space-y-1 text-gray-700">
+          {["Eau de Cologne", "Eau de Toilette", "Eau de Parfum", "Elixir & Extrait"].map((item, index) => (
+            <motion.li
+              key={index}
+              className="cursor-pointer relative 
+                before:absolute before:bottom-0 before:w-0 before:h-[2px] 
+                before:bg-black before:transition-all before:duration-300 
+                hover:before:w-full hover:text-black"
+            >
+              {item}
+            </motion.li>
+          ))}
+        </ul>
+      </div>
+
+    </div>
   </motion.div>
 </motion.div>
 
 
         {/* Bath & Body */}
         <motion.div
-          className="text-lg font-semibold text-gray-800 cursor-pointer hover:text-black transition transform hover:scale-105"
-          whileHover={{ scale: 1.1 }}
+          className="flex items-center text-lg font-semibold text-gray-800 cursor-pointer hover:text-black transition transform relative 
+          before:absolute before:bottom-[-2px] before:left-0 before:w-0 before:h-[2px] 
+          before:bg-black before:transition-all before:duration-300 
+          hover:before:w-full"
         >
           Bath & Body
         </motion.div>
@@ -138,8 +197,6 @@ const Navbar = () => {
             type="text"
             placeholder="Search our Store..."
             className="w-half border border-gray-400 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:border-gray-600 focus:shadow-md text-gray-800 normal-case transition-all duration-200"
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
           />
 
           {/* Clickable Search Icon */}
@@ -170,6 +227,7 @@ const Navbar = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
               >
                 <div className="p-4 text-center text-gray-500">
                   {wishlist.length === 0 ? "Your wishlist is empty" : "Wishlist items here"}
@@ -195,6 +253,7 @@ const Navbar = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
                 >
                   {cartItems.length === 0 ? (
                     <p className="text-center text-gray-500 p-4">Your cart is empty</p>
@@ -215,38 +274,40 @@ const Navbar = () => {
           </motion.div>
 
           {/* Account */}
-          <motion.div
-            className="relative cursor-pointer flex items-center space-x-1"
-            onMouseEnter={() => setAccountOpen(true)}
-            onMouseLeave={() => setAccountOpen(false)}
-          >
-            <FiUser size={24} className="text-black" />
-            <span className="text-lg font-semibold"></span>
-            {/* Account Dropdown */}
-            <AnimatePresence>
-              {accountOpen && (
-                <motion.div
-                  className="absolute right-0 top-full mt-2 w-64 bg-white shadow-xl rounded-lg border border-gray-200 z-50"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                >
-                  <div className="p-4 border-b border-gray-300">
-                    <button className="w-full bg-black text-white uppercase font-bold py-2 rounded-md">
-                      Login
-                    </button>
-                    <button className="w-full mt-2 border border-black text-black uppercase font-bold py-2 rounded-md">
-                      Register
-                    </button>
-                  </div>
-                  <div className="p-4 text-gray-800 hover:bg-gray-100 cursor-pointer">
-                    Your Orders
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-          
+      <motion.div
+        className="relative cursor-pointer flex items-center space-x-1"
+        onMouseEnter={() => setAccountOpen(true)}
+        onMouseLeave={() => setTimeout(() => setAccountOpen(false), 200)} // Delay before closing
+      >
+        <FiUser size={24} className="text-black" />
+        <span className="text-lg font-semibold"></span>
+
+        {/* Account Dropdown */}
+        <AnimatePresence>
+          {accountOpen && (
+            <motion.div
+              className="absolute right-0 top-full mt-2 w-64 bg-white shadow-xl rounded-lg border border-gray-200 z-50"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }} // Smooth transition
+            >
+              <div className="p-4 border-b border-gray-300">
+                <button className="w-full bg-black text-white uppercase font-bold py-2 rounded-md">
+                  Login
+                </button>
+                <button className="w-full mt-2 border border-black text-black uppercase font-bold py-2 rounded-md">
+                  Register
+                </button>
+              </div>
+              <div className="p-4 text-gray-800 hover:bg-gray-100 cursor-pointer">
+                Your Orders
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
         </div>
       </nav>
     </div>

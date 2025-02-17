@@ -1,63 +1,98 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import FeaturedProducts from "../components/FeaturedProducts";
-import PerfumeDisplay from "../assets/perfume-shop.png"; // Import the image
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import her11 from "../assets/her11.jpg";
+import hero6 from "../assets/hero6.jpg";
+import him1 from "../assets/him1.jpg";
+import center from "../assets/center.jpg";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const { scrollY } = useScroll();
+  const [triggered, setTriggered] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setTriggered(scrollY.get() > 200);
+    };
+    const unsubscribe = scrollY.onChange(handleScroll);
+    return () => unsubscribe();
+  }, [scrollY]);
+
+  // **Main Image Scale (Parallax Effect)**
+  const mainImageScale = useTransform(scrollY, [100, 600], [1, 0.92]);
+
+  // **Left and Right Image Motion**
+  const leftX = useTransform(scrollY, [100, 800], ["-50%", "0%"]);
+  const rightX = useTransform(scrollY, [100, 800], ["50%", "0%"]);
+
   return (
-    <div className="relative bg-gradient-to-b from-charcoal-900 to-plum-800 min-h-screen flex flex-col items-center text-center text-ivory-200 overflow-hidden">
-      {/* Background Layer for Depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-charcoal-900 opacity-50"></div>
+    <div className="relative flex flex-col items-center justify-center w-full h-[250vh] bg-white">
+      {/* Full-Screen Center Image (Main Hero) */}
+      <motion.div className="absolute top-0 w-full h-screen flex justify-center items-center">
+        <motion.img
+          src={hero6}
+          alt="Main Fragrance"
+          className="w-full h-screen object-cover cursor-pointer"
+          style={{ scale: mainImageScale }} 
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          onClick={() => navigate("/collections/all")}
+        />
+      </motion.div>
 
-      {/* Hero Section */}
-      <motion.div 
-        className="relative z-10 flex flex-col items-center mt-32"
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      >
-        <h1 className="text-6xl font-bold font-[Inter] text-gold-500 mb-4">
-          Every Scent Tells a Story
-        </h1>
-        <motion.p 
-          className="text-xl text-ivory-200/80 max-w-2xl leading-relaxed"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.7 }}
+      {/* Flex Container for Left, Center, Right Images */}
+      <motion.div className="absolute top-[110vh] flex w-full justify-center items-center gap-8">
+        {/* Left Section - Shop for Her */}
+        <motion.div
+          className="w-1/3 h-[90vh] flex items-center justify-center group relative cursor-pointer overflow-hidden"
+          style={{ x: leftX, opacity: triggered ? 1 : 0.5 }}
+          transition={{ type: "spring", damping: 15, stiffness: 100 }}
+          onClick={() => navigate("/collections/women")}
         >
-          Discover fragrances that define you. Explore our curated collection of niche and designer perfumes, crafted to evoke emotion and elegance.
-        </motion.p>
+          <motion.img
+            src={her11}
+            alt="Shop for Her"
+            className="w-full h-full object-cover"
+            whileHover={{ scale: 1.03 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          />
+          <motion.span className="absolute bottom-10 left-15 text-white text-xl tracking-wide opacity-70 group-hover:opacity-100 transition-all font-montserrat">
+            Shop for Her
+          </motion.span>
+        </motion.div>
+
+        {/* Center Section - Discover All Brands */}
+        <motion.div className="w-[40%] h-[90vh] flex justify-center cursor-pointer relative overflow-hidden">
+          <motion.img
+            src={center}
+            alt="Main Fragrance"
+            className="w-full h-full object-cover"
+            whileHover={{ scale: 1.03 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            onClick={() => navigate("/collections/all")}
+          />
+          <motion.span className="absolute bottom-10 text-white text-xl tracking-wide opacity-100 group-hover:opacity-100 transition-all font-montserrat">
+            Discover Brands
+          </motion.span>
+        </motion.div>
+
+        {/* Right Section - Shop for Him */}
+        <motion.div
+          className="w-1/3 h-[90vh] flex items-center justify-center group relative cursor-pointer overflow-hidden"
+          style={{ x: rightX, opacity: triggered ? 1 : 0.5 }}
+          transition={{ type: "spring", damping: 15, stiffness: 100 }}
+          onClick={() => navigate("/collections/men")}
+        >
+          <><motion.img
+                src={him1}
+                alt="Shop for Him"
+                className="w-full h-full object-cover"
+                whileHover={{ scale: 1.03 }}
+                transition={{ duration: 0.5, ease: "easeOut" }} /><motion.span className="absolute bottom-10 right-15 text-white text-xl tracking-wide opacity-70 group-hover:opacity-100 transition-all font-montserrat">
+                    Shop for Him
+                </motion.span></>
+        </motion.div>
       </motion.div>
-
-      {/* Perfume Display Image */}
-      <motion.img
-        src={PerfumeDisplay}
-        alt="Luxury Perfume Collection"
-        className="relative z-10 mt-12 w-full max-w-4xl rounded-lg shadow-lg"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.9 }}
-      />
-
-      {/* CTA Button */}
-      <motion.div 
-        className="relative z-10"
-        initial={{ opacity: 0, y: 20 }} 
-        animate={{ opacity: 1, y: 0 }} 
-        transition={{ duration: 1, delay: 1 }}
-      >
-        <Link to="/products">
-          <button className="mt-8 px-8 py-3 bg-gold-500 text-charcoal-900 rounded-full shadow-lg hover:bg-gold-600 transition-all transform hover:scale-105">
-            Shop Now
-          </button>
-        </Link>
-      </motion.div>
-
-      {/* Featured Products Section */}
-      <div className="relative z-10 w-full mt-24 flex justify-center">
-        <FeaturedProducts />
-      </div>
     </div>
   );
 };
