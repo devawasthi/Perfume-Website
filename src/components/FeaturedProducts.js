@@ -1,39 +1,54 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Pagination, Autoplay } from "swiper/modules";
+import React, { useEffect } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import hero14 from "../assets/hero14.jpg";
+import him1 from "../assets/him1.jpg";
+import hero5 from "../assets/hero5.jpeg";
 
-// Sample product images (Replace with actual product data)
-const products = [
-    { id: 1, name: "Creed Aventus", image: require("../assets/perfume1.png") },
-    { id: 2, name: "Oud Maracuja", image: require("../assets/perfume2.png") },
-    { id: 3, name: "Tuscan Leather", image: require("../assets/perfume3.png") },
-    // { id: 4, name: "Bleu De Chanel", image: require("../assets/perfume4.png") },
-  ];  
+export default function AnimatedImages() {
+  const controls = useAnimation();
+  const leftControls = useAnimation();
+  const rightControls = useAnimation();
+  const { ref, inView } = useInView({ triggerOnce: true });
 
-const FeaturedProducts = () => {
+  useEffect(() => {
+    if (inView) {
+      controls.start({ width: "400px", height: "400px" }); // Ensure consistent size
+      leftControls.start({ opacity: 1, x: 0 });
+      rightControls.start({ opacity: 1, x: 0 });
+    }
+  }, [inView, controls, leftControls, rightControls]);
+
   return (
-    <div className="mt-12 w-full max-w-4xl "> {/* Added pb-10 here */}
-  <h2 className="text-3xl font-bold text-white text-center mb-6">Featured Fragrances</h2>
-  <Swiper
-    modules={[Pagination, Autoplay]}
-    spaceBetween={20}
-    slidesPerView={1}
-    pagination={{ clickable: true, el: ".swiper-pagination", dynamicBullets: true }}
-    autoplay={{ delay: 3000 }}
-    className="w-full"
-  >
-    {products.map((product) => (
-      <SwiperSlide key={product.id} className="flex flex-col items-center">
-        <img src={product.image} alt={product.name} className="h-64 w-auto rounded-md shadow-lg mx-auto" />
-        <p className="text-xl font-semibold mt-4 mb-6">{product.name}</p> {/* Added mb-6 */}
-      </SwiperSlide>
-    ))}
-  </Swiper>
-  <div className="swiper-pagination mt-6"></div> {/* Moves dots down */}
-</div>
-  );
-};
+    <div ref={ref} className="relative w-[100%] h-screen flex items-center justify-center">
+      <div className="flex items-center justify-center gap-4">
+        {/* Left Image */}
+        <motion.img
+          src={him1}
+          initial={{ opacity: 0, x: "-150px" }}
+          animate={leftControls}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="w-[350px] h-[400px] object-cover"
+        />
 
-export default FeaturedProducts;
+        {/* Center Image (Shrinks to same size) */}
+        <motion.img
+          src={hero14}
+          initial={{ width: "80vw", height: "80vh" }}
+          animate={controls}
+          transition={{ duration: 1 }}
+          className="object-contain"
+        />
+
+        {/* Right Image */}
+        <motion.img
+          src={hero5}
+          initial={{ opacity: 0, x: "150px" }}
+          animate={rightControls}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="w-[350px] h-[400px] object-cover"
+        />
+      </div>
+    </div>
+  );
+}
