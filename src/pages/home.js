@@ -5,20 +5,21 @@ import her11 from "../assets/her11.jpg";
 import hero6 from "../assets/hero6.jpg";
 import him1 from "../assets/him1.jpg";
 import center from "../assets/center.jpg";
+import hero5 from "../assets/hero1.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
   const { scrollY } = useScroll();
-  const [triggered, setTriggered] = useState(false);
+  const { scrollYProgress } = useScroll();
 
   const [animate, setAnimate] = useState(false);
   const containerRef = useRef(null);
+  
 
   const mainImageScale = useTransform(scrollY, [100, 800], [1, 0.92]);
 
-  // **Left and Right Image Motion**
-  const leftX = useTransform(scrollY, [100, 800], ["-50%", "0%"]);
-  const rightX = useTransform(scrollY, [100, 800], ["50%", "0%"]);
+  const scale = useTransform(scrollYProgress, [0, 0.6], [0.8, 1]); 
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.4], [0.5, 1, 1]);
 
   useEffect(() => {
     let lastScrollY = scrollY.get(); // Track last scroll position
@@ -26,7 +27,7 @@ const Home = () => {
     const handleScroll = () => {
       const currentScrollY = scrollY.get();
 
-      if (currentScrollY > 600) {
+      if (currentScrollY > 500) {
         setAnimate(true);
       } else if (currentScrollY < 100 && lastScrollY > currentScrollY) {
         setAnimate(false); // Reset only when scrolling up beyond 90px
@@ -56,7 +57,7 @@ const Home = () => {
       {/* Three Images Section */}
 <div
   ref={containerRef}
-  className="relative w-full h-screen flex justify-center items-center bg-white overflow-hidden pt-24" // Top padding
+  className="relative w-full h-screen flex justify-center items-center bg-white overflow-hidden pt-28" // Top padding
 >
   {/* Left Image (Slides Up & Fades In) */}
   <motion.div
@@ -75,8 +76,9 @@ const Home = () => {
       style={{ transformOrigin: "center" }} // Scale from the center
     />
     <motion.span
-      className="absolute bottom-12 left-12 text-white text-xl tracking-wide opacity-70 transition-all font-montserrat"
+      className="absolute bottom-12 left-12 text-white text-xl -translate-y-2 tracking-wide opacity-70 cursor-pointer transition-all font-montserrat"
       whileHover={{ filter: "drop-shadow(0 0 8px rgba(255, 255, 255, 0.5))" }} // Glow effect on hover
+      onClick={() => navigate("/collections/women")}
     >
       Shop for Her
     </motion.span>
@@ -99,8 +101,9 @@ const Home = () => {
       style={{ transformOrigin: "center" }} // Scale from the center
     />
     <motion.span
-      className="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-white text-xl tracking-wide opacity-100 transition-all font-montserrat"
+      className="absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-2 cursor-pointer text-white text-xl tracking-wide opacity-100 transition-all font-montserrat"
       whileHover={{ filter: "drop-shadow(0 0 8px rgba(255, 255, 255, 0.5))" }} // Glow effect on hover
+      onClick={() => navigate("/collections/all")}
     >
       Discover Brands
     </motion.span>
@@ -123,14 +126,30 @@ const Home = () => {
       style={{ transformOrigin: "center" }} // Scale from the center
     />
     <motion.span
-      className="absolute bottom-12 right-10 text-white text-xl tracking-wide opacity-70 transition-all font-montserrat"
+      className="absolute bottom-12 right-10  -translate-y-2 cursor-pointer text-white text-xl tracking-wide opacity-70 transition-all font-montserrat"
       whileHover={{ filter: "drop-shadow(0 0 8px rgba(255, 255, 255, 0.5))" }} // Glow effect on hover
+      onClick={() => navigate("/collections/men")}
     >
       Shop for Him
     </motion.span>
   </motion.div>
 </div>
-    </div>
+{/* <motion.div className="relative w-[120%] h-screen flex justify-center items-center bg-gray-100 overflow-hidden">
+        <motion.img
+          src={hero5}
+          alt="New Arrival"
+          className="w-4/5 h-4/5 object-cover shadow-lg cursor-pointer"
+          onClick={() => navigate("/collections/new")}
+        />
+        <motion.span
+          className="absolute bottom-10 text-black text-sm tracking-wide cursor-pointer transition-all font-montserrat px-6 py-3 shadow-md"
+          whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.2)", filter: "drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))" }}
+          onClick={() => navigate("/collections/new")}
+        >
+          Explore Creed
+        </motion.span>
+      </motion.div> */}
+</div>
   );
 };
 

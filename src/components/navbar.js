@@ -4,6 +4,8 @@ import { FiUser, FiShoppingBag, FiHeart, FiSearch } from "react-icons/fi";
 import { FiCheckCircle, FiTruck } from "react-icons/fi";
 import { FiChevronDown } from "react-icons/fi";
 import "./Navbar.css";
+import { Navigate } from "react-router-dom";
+import Home from "../pages/Home";
 
 const bannerMessages = [
   { text: "Authentic Luxury Fragrances", icon: <FiCheckCircle /> },
@@ -71,42 +73,33 @@ const Navbar = () => {
       />
 
       {/* Navbar */}
-      <nav className="flex justify-between items-center py-5 px-8 bg-white shadow-md relative">
-        {/* Logo */}
-        <motion.h1
-          className="text-3xl font-semibold tracking-wide font-[Playfair Display]"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          Galleria Des Parfum
-        </motion.h1>
-
+      <nav className="flex justify-between items-center py-5 px-8 bg-white shadow-md relative ">     
 
           {/* Navigation Menu */}
           <motion.div
-              className="flex justify-center items-center gap-8 py-3 bg-gray-30 w-[50%] max-w-1xl  my-1 -ml-9"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-          >
+          className="flex justify-center items-center gap-5 py-3 bg-gray-30 w-[30%] my-1 font-montserrat"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+
         {/* Brands */}
         <motion.div
-          className="flex items-center text-lg font-semibold text-gray-800 cursor-pointer hover:text-black transition transform relative 
+          className="flex items-center text-sm  text-gray-800 cursor-pointer hover:text-black transition transform relative 
           before:absolute before:bottom-[-2px] before:left-0 before:w-0 before:h-[2px] 
           before:bg-black before:transition-all before:duration-300 
-          hover:before:w-full"
+          hover:before:w-full font-montserrat"
         >
           Brands
         </motion.div>
 
        {/* Fragrances (Dropdown) */}
-<motion.div className="relative group">
+  <motion.div className="relative group ">
   <motion.div
-    className="flex items-center text-lg font-semibold text-gray-800 cursor-pointer hover:text-black transition transform relative 
+    className="flex items-center text-sm text-gray-800 cursor-pointer hover:text-black transition transform relative 
       before:absolute before:bottom-[-2px] before:left-0 before:w-0 before:h-[2px] 
       before:bg-black before:transition-all before:duration-300 
-      hover:before:w-full"
+      hover:before:w-full font-montserrat"
   >
     Fragrances <FiChevronDown className="ml-2" />
   </motion.div>
@@ -123,15 +116,15 @@ const Navbar = () => {
     <div className="grid grid-cols-3 gap-6">
       {/* Product Type */}
       <div>
-        <h3 className="text-lg font-bold text-black mb-2">Product Type</h3>
-        <ul className="space-y-1 text-gray-700">
+        <h3 className="text-lg font-bold text-black mb-2 ">Product Type</h3>
+        <ul className="space-y-1 text-gray-700 ">
           {["Samples", "Miniatures", "Decants", "Testers", "Retail Packs", "Vintage/Rare", "Partials"].map((item, index) => (
             <motion.li
               key={index}
               className="cursor-pointer relative 
                 before:absolute before:bottom-0 before:w-0 before:h-[2px] 
                 before:bg-black before:transition-all before:duration-300 
-                hover:before:w-full hover:text-black"
+                hover:before:w-full hover:text-black font-montserrat"
             >
               {item}
             </motion.li>
@@ -149,7 +142,7 @@ const Navbar = () => {
               className="cursor-pointer relative 
                 before:absolute before:bottom-0 before:w-0 before:h-[2px] 
                 before:bg-black before:transition-all before:duration-300 
-                hover:before:w-2/3 hover:text-black"
+                hover:before:w-2/3 hover:text-black font-montserrat"
             >
               {item}
             </motion.li>
@@ -159,7 +152,7 @@ const Navbar = () => {
 
       {/* Concentration */}
       <div>
-        <h3 className="text-lg font-bold text-black mb-2">Concentration</h3>
+        <h3 className="text-lg font-bold text-black mb-2 backdrop-blur-sm">Concentration</h3>
         <ul className="space-y-1 text-gray-700">
           {["Eau de Cologne", "Eau de Toilette", "Eau de Parfum", "Elixir & Extrait"].map((item, index) => (
             <motion.li
@@ -167,7 +160,7 @@ const Navbar = () => {
               className="cursor-pointer relative 
                 before:absolute before:bottom-0 before:w-0 before:h-[2px] 
                 before:bg-black before:transition-all before:duration-300 
-                hover:before:w-full hover:text-black"
+                hover:before:w-full hover:text-black font-montserrat"
             >
               {item}
             </motion.li>
@@ -182,22 +175,33 @@ const Navbar = () => {
 
         {/* Bath & Body */}
         <motion.div
-          className="flex items-center text-lg font-semibold text-gray-800 cursor-pointer hover:text-black transition transform relative 
+          className="flex items-center text-sm text-gray-800 cursor-pointer hover:text-black transition transform relative 
           before:absolute before:bottom-[-2px] before:left-0 before:w-0 before:h-[2px] 
           before:bg-black before:transition-all before:duration-300 
-          hover:before:w-full"
+          hover:before:w-full font-montserrat"
         >
           Bath & Body
         </motion.div>
       </motion.div>
-      
-{/* Search Bar */}
-<motion.div className="relative w-1/4">
-          <input
-            type="text"
-            placeholder="Search our Store..."
-            className="w-half border border-gray-400 rounded-full py-2 pl-10 pr-4 focus:outline-none focus:border-gray-600 focus:shadow-md text-gray-800 normal-case transition-all duration-200"
-          />
+
+     { /* Logo */ }
+      <motion.h1
+          className="text-4xl font-semibold tracking-wide justify-centre"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          onClick={Navigate(Home)}
+        >
+          Galleria Des Parfum
+        </motion.h1>
+
+       {/* Search Bar */}
+        <motion.div className="relative w-1/4 absolute -right-12">
+              <input
+                type="text"
+                placeholder="Tuscan Leather"
+                className="w-half border border-gray-400 rounded-full py-2 pl-10 pr-8 focus:outline-none focus:border-gray-600 focus:shadow-md text-gray-800 text-sm backdrop-blur-sm transition-all duration-200 font-montserrat"
+              />
 
           {/* Clickable Search Icon */}
           <div
@@ -217,8 +221,8 @@ const Navbar = () => {
             onMouseEnter={() => setWishlistOpen(true)}
             onMouseLeave={() => setWishlistOpen(false)}
           >
-            <FiHeart size={24} className="text-black" />
-            <span className="text-lg font-semibold"></span>
+            <FiHeart size={18} className="text-black" />
+            <span className="text-lg"></span>
             {/* Wishlist Dropdown */}
             <AnimatePresence>
               {wishlistOpen && (
@@ -229,7 +233,7 @@ const Navbar = () => {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
               >
-                <div className="p-4 text-center text-gray-500">
+                <div className="p-3 text-center text-gray-500">
                   {wishlist.length === 0 ? "Your wishlist is empty" : "Wishlist items here"}
                 </div>
               </motion.div>
@@ -243,7 +247,7 @@ const Navbar = () => {
             onMouseEnter={() => setCartOpen(true)}
             onMouseLeave={() => setCartOpen(false)}
           >
-            <FiShoppingBag size={24} className="text-black" />
+            <FiShoppingBag size={18} className="text-black" />
             <span className="text-lg font-semibold"></span>
             {/* Cart Dropdown */}
             <AnimatePresence>
@@ -279,8 +283,8 @@ const Navbar = () => {
         onMouseEnter={() => setAccountOpen(true)}
         onMouseLeave={() => setTimeout(() => setAccountOpen(false), 200)} // Delay before closing
       >
-        <FiUser size={24} className="text-black" />
-        <span className="text-lg font-semibold"></span>
+        <FiUser size={18} className="text-black" />
+        <span className="text-lg"></span>
 
         {/* Account Dropdown */}
         <AnimatePresence>
