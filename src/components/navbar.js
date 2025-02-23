@@ -20,6 +20,7 @@ const Navbar = () => {
   const cartItems = []; // Replace with actual data when integrating backend
   const [currentMessage, setCurrentMessage] = useState(0);
   const [scrolling, setScrolling] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -93,84 +94,93 @@ const Navbar = () => {
           Brands
         </motion.div>
 
-       {/* Fragrances (Dropdown) */}
-  <motion.div className="relative group ">
-  <motion.div
-    className="flex items-center text-sm text-gray-800 cursor-pointer hover:text-black transition transform relative 
-      before:absolute before:bottom-[-2px] before:left-0 before:w-0 before:h-[2px] 
-      before:bg-black before:transition-all before:duration-300 
-      hover:before:w-full font-montserrat"
+      {/* Fragrance section */}
+  
+        <motion.div 
+    className="relative" 
+    onMouseEnter={() => setIsOpen(true)} 
+    onMouseLeave={() => setIsOpen(false)}
   >
-    Fragrances <FiChevronDown className="ml-2" />
+    {/* Dropdown Trigger */}
+    <motion.div
+      className="flex items-center text-sm text-gray-800 cursor-pointer hover:text-black transition relative 
+        before:absolute before:bottom-[-2px] before:left-0 before:w-0 before:h-[2px] 
+        before:bg-black before:transition-all before:duration-300 
+        hover:before:w-full font-montserrat"
+    >
+      Fragrances <FiChevronDown className="ml-2"  />
+      
+    </motion.div>
+
+    {/* Animated Dropdown Menu */}
+    <motion.div
+      className={`absolute left-0 mt-3 w-[600px] p-8 bg-white/80 backdrop-blur-xl shadow-xl rounded-xl border border-gray-200 
+        transition-all duration-500 ease-in-out z-50 ${
+          isOpen ? "opacity-100 visible pointer-events-auto" : "opacity-0 invisible pointer-events-none"
+        }` }
+      initial={{ opacity: 0, y: -15 }}
+      animate={{ opacity: isOpen ? 1 : 0, y: isOpen ? 0 : -15 }}
+      exit={{ opacity: 0, y: -15 }}
+      transition={{ duration: 0.3, ease: "easeOut" }} // Faster exit
+      
+    >
+      <div className="grid grid-cols-3 gap-8">
+        {/* Product Type */}
+        <div>
+          <h3 className="text-sm font-semibold text-black mb-3">Product Type</h3>
+          <ul className="space-y-2 text-gray-700">
+            {["Samples", "Miniatures", "Decants", "Testers", "Retail Packs", "Vintage/Rare", "Partials"].map((item, index) => (
+              <motion.li
+                key={index}
+                className="cursor-pointer text-sm relative transition-all hover:text-black hover:scale-105 
+                  before:absolute before:bottom-0 before:w-0 before:h-[2px] 
+                  before:bg-black before:transition-all before:duration-300 
+                  hover:before:w-full font-montserrat"
+              >
+                {item}
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Olfactive Families */}
+        <div>
+          <h3 className="text-sm font-semibold text-black mb-3">Olfactive Families</h3>
+          <ul className="space-y-2 text-gray-700">
+            {["Aromatic", "Chypre", "Citrus", "Floral", "Fougere", "Fruity", "Leather", "Oriental", "Woody"].map((item, index) => (
+              <motion.li
+                key={index}
+                className="cursor-pointer text-sm relative transition-all hover:text-black hover:scale-105 
+                  before:absolute before:bottom-0 before:w-0 before:h-[2px] 
+                  before:bg-black before:transition-all before:duration-300 
+                  hover:before:w-2/3 font-montserrat"
+              >
+                {item}
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Concentration */}
+        <div>
+          <h3 className="text-sm font-semibold text-black mb-3">Concentration</h3>
+          <ul className="space-y-2 text-gray-700">
+            {["Eau de Cologne", "Eau de Toilette", "Eau de Parfum", "Elixir & Extrait"].map((item, index) => (
+              <motion.li
+                key={index}
+                className="cursor-pointer text-sm relative transition-all hover:text-black hover:scale-105 
+                  before:absolute before:bottom-0 before:w-0 before:h-[2px] 
+                  before:bg-black before:transition-all before:duration-300 
+                  hover:before:w-full font-montserrat"
+              >
+                {item}
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </motion.div>
   </motion.div>
-
-  {/* Larger Dropdown Menu */}
-  <motion.div
-    className="absolute left-0 mt-2 w-[500px] bg-white shadow-lg rounded-lg border border-gray-200 opacity-0 invisible 
-      group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 p-6"
-    initial={{ opacity: 0, y: -10 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -10 }}
-    transition={{ duration: 0.3, ease: "easeInOut" }}
-  >
-    <div className="grid grid-cols-3 gap-6">
-      {/* Product Type */}
-      <div>
-        <h3 className="text-lg font-bold text-black mb-2 ">Product Type</h3>
-        <ul className="space-y-1 text-gray-700 ">
-          {["Samples", "Miniatures", "Decants", "Testers", "Retail Packs", "Vintage/Rare", "Partials"].map((item, index) => (
-            <motion.li
-              key={index}
-              className="cursor-pointer relative 
-                before:absolute before:bottom-0 before:w-0 before:h-[2px] 
-                before:bg-black before:transition-all before:duration-300 
-                hover:before:w-full hover:text-black font-montserrat"
-            >
-              {item}
-            </motion.li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Olfactive Families */}
-      <div>
-        <h3 className="text-lg font-bold text-black mb-2">Olfactive Families</h3>
-        <ul className="space-y-1 text-gray-700">
-          {["Aromatic", "Chypre", "Citrus", "Floral", "Fougere", "Fruity", "Leather", "Oriental", "Woody"].map((item, index) => (
-            <motion.li
-              key={index}
-              className="cursor-pointer relative 
-                before:absolute before:bottom-0 before:w-0 before:h-[2px] 
-                before:bg-black before:transition-all before:duration-300 
-                hover:before:w-2/3 hover:text-black font-montserrat"
-            >
-              {item}
-            </motion.li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Concentration */}
-      <div>
-        <h3 className="text-lg font-bold text-black mb-2 backdrop-blur-sm">Concentration</h3>
-        <ul className="space-y-1 text-gray-700">
-          {["Eau de Cologne", "Eau de Toilette", "Eau de Parfum", "Elixir & Extrait"].map((item, index) => (
-            <motion.li
-              key={index}
-              className="cursor-pointer relative 
-                before:absolute before:bottom-0 before:w-0 before:h-[2px] 
-                before:bg-black before:transition-all before:duration-300 
-                hover:before:w-full hover:text-black font-montserrat"
-            >
-              {item}
-            </motion.li>
-          ))}
-        </ul>
-      </div>
-
-    </div>
-  </motion.div>
-</motion.div>
 
 
         {/* Bath & Body */}
@@ -290,7 +300,7 @@ const Navbar = () => {
         <AnimatePresence>
           {accountOpen && (
             <motion.div
-              className="absolute right-0 top-full mt-2 w-64 bg-white shadow-xl rounded-lg border border-gray-200 z-50"
+              className="absolute right-0 top-full mt-2 w-64 bg-white shadow-xl rounded-lg backdrop-blur border border-gray-200 z-50"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
